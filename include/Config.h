@@ -12,21 +12,26 @@
 #define PIN_SPS_RX 16
 #define PIN_SPS_TX 17
 
+// --- LED ---
+#define PIN_B 33
+#define PIN_G 25
+#define PIN_R 27
+
 // ================== WIFI ==================
-#define WIFI_SSID     "WIFI"
-#define WIFI_PASSWORD "00000000"
+#define WIFI_SSID     "PerryZone"
+#define WIFI_PASSWORD "agenteP123"
 
 // ================== MQTT ==================
-#define MQTT_SERVER   "servidor_mqtt"
+#define MQTT_SERVER   "200.13.4.202"
 #define MQTT_PORT     1883
 
 // Tópico de suscripción
-#define TOPIC_SUB     "ufrocasa/si"
+#define TOPIC_SUB     "SAD/led"
 
 // Tópicos de publicación
-#define TOPIC_SPS30   "ufrocasa/sps30"
-#define TOPIC_DHT22   "ufrocasa/dht22"
-#define TOPIC_MQ7     "ufrocasa/mq7"
+#define TOPIC_SPS30   "SAD/sps30"
+#define TOPIC_DHT22   "SAD/dht22"
+#define TOPIC_MQ7     "SAD/mq7"
 
 // ================== NTP (Hora de Chile) ==================
 #define NTP_SERVER_1       "pool.ntp.org"

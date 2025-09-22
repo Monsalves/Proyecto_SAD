@@ -14,6 +14,19 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print(topic);
   Serial.print("': ");
   Serial.println(msg);
+  if (msg == "red"){
+    analogWrite(PIN_R, 255);
+    analogWrite(PIN_G, 0);
+    analogWrite(PIN_B, 0);
+  }else if (msg == "green"){
+    analogWrite(PIN_R, 0);
+    analogWrite(PIN_G, 255);
+    analogWrite(PIN_B, 0);
+  }else if (msg == "yellow"){
+    analogWrite(PIN_R, 255);
+    analogWrite(PIN_G, 255);
+    analogWrite(PIN_B, 0);
+  }
 }
 
 void reconnect() {
