@@ -1,0 +1,17 @@
+services:
+  mqtt:
+    # Imagen oficial de Eclipse Mosquitto.
+    image: eclipse-mosquitto:2.0
+    container_name: mqtt_broker
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+      - "8883:8883"
+    volumes:
+      # Monta el archivo de configuración personalizado.
+      - ./mosquitto/config:/mosquitto/config
+      # Monta el directorio de datos para persistencia.
+      - ./mosquitto/data:/mosquitto/data
+      # Monta el directorio de logs.
+      - ./mosquitto/log:/mosquitto/log
