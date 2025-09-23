@@ -1,0 +1,11 @@
+services:
+  env-sensors-led:
+    build: .
+    container_name: env-sensors-led
+    restart: unless-stopped
+    env_file:
+      - .env
+    network_mode: host
+    # If you prefer bridge, uncomment ports and remove network_mode
+    # ports:
+    #   - "1883:1883" # only if broker in same container (not our case)
