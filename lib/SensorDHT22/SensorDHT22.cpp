@@ -11,31 +11,37 @@ const long humTempInterval = 1000;
 
 void iniciarDHT22() { dht.begin(); }
 
-StaticJsonDocument<200> medirHumedadTemperatura() {
-  StaticJsonDocument<200> doc;
+String medirHumedadTemperatura() {
+  String doc = "{";
   float temp = dht.readTemperature();
   float hum  = dht.readHumidity();
   if (!isnan(temp) && !isnan(hum)) {
-      doc["Temperatura"] = temp;
-      doc["Humedad"] = hum;
-  } else doc["error"] = "Error lectura DHT22";
+    doc += "\"Temperatura\": " + String(temp) + ", ";
+    doc += "\"Humedad\": " + String(hum);
+  } else doc += "\"error\": \"Error lectura DHT22\"";
+  doc += "}";
+
   return doc;
 }
 
 void enviarHumedadTemperatura() {
-  StaticJsonDocument<200> doc = medirHumedadTemperatura();
-  doc["device"] = "DHT22";
-  doc["timestamp"] = getUnixTimestamp();
+  String payload = medirHumedadTemperatura();
 
-  size_t jsonSize = measureJson(doc);
-  char jsonBuffer[jsonSize + 1];
-  serializeJson(doc, jsonBuffer, sizeof(jsonBuffer));
+  if (payload.endsWith("}")) {
+    payload.remove(payload.length() - 1);
+    if (payload.length() > 1) payload += ", ";
+    payload += "\"device\": \"DHT22\", \"timestamp\": ";
+    payload += String(getUnixTimestamp());
+    payload += "}";
+  }
 
-  if (client.publish(TOPIC_DHT22, jsonBuffer))
-      Serial.println("📤 Envio DHT22: " + String(jsonBuffer));
-  else
-      Serial.println("❌ Fallo al enviar DHT22");
+  if (client.publish(TOPIC_DHT22, payload.c_str())) {
+    Serial.println("📤 Envio DHT22: " + payload);
+  } else {
+    Serial.println("❌ Fallo al enviar DHT22");
+  }
 }
+
 
 void generarEnvioHumedadTemperatura() {
   unsigned long currentMillis = millis();
